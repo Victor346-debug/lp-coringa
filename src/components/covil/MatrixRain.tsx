@@ -27,11 +27,11 @@ export function MatrixRain() {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${size}px monospace`;
       for (let i = 0; i < cols; i++) {
-        const ch = chars[Math.floor(Math.random() * chars.length)];
+        const ch = chars[Math.floor(Math.random() * chars.length)] ?? "0";
         ctx.fillStyle = Math.random() > 0.97 ? "#eaffea" : "rgba(57,255,20,0.55)";
-        ctx.fillText(ch, i * size, drops[i] * size);
-        drops[i] += 0.6;
-        if (drops[i] * size > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        const d = drops[i] ?? 0;
+        ctx.fillText(ch, i * size, d * size);
+        drops[i] = d * size > canvas.height && Math.random() > 0.975 ? 0 : d + 0.6;
       }
       raf = requestAnimationFrame(draw);
     };
