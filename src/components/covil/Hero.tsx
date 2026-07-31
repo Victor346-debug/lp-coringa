@@ -17,7 +17,7 @@ export function Hero() {
     >
       {/* Character plate */}
       <motion.div
-        style={reduce ? undefined : { y: imgY }}
+        style={reduce ? {} : { y: imgY }}
         className="pointer-events-none absolute inset-y-0 right-0 z-0 w-full sm:w-[62%] lg:w-[55%]"
       >
         <img
@@ -37,7 +37,7 @@ export function Hero() {
       </motion.div>
 
       <motion.div
-        style={reduce ? undefined : { y: textY, opacity: fade }}
+        style={reduce ? {} : { y: textY, opacity: fade }}
         className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8"
       >
         <div className="max-w-3xl">
