@@ -42,7 +42,6 @@ function Index() {
       {matrix && <MatrixRain />}
       <CursorGlow />
       <Nav onSigilClick={registerSigilClick} hacker={hacker} />
-      <h1 className="sr-only">Coringa dos Prompts — aprenda a faturar com Inteligência Artificial</h1>
       <Hero />
       <Manifesto />
       <Library />
