@@ -18,7 +18,7 @@ export function Hero() {
       {/* Character plate */}
       <motion.div
         style={reduce ? {} : { y: imgY }}
-        className="pointer-events-none absolute inset-y-0 right-0 z-0 w-full sm:w-[62%] lg:w-[55%]"
+        className="pointer-events-none absolute inset-y-0 right-0 z-0 w-full sm:w-[70%] lg:w-[64%]"
       >
         <img
           src={heroImg}
@@ -31,7 +31,7 @@ export function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, #030303 8%, rgba(3,3,3,0.72) 34%, rgba(3,3,3,0.05) 70%), linear-gradient(to top, #030303 2%, transparent 40%)",
+              "linear-gradient(90deg, #030303 0%, rgba(3,3,3,0.96) 18%, rgba(3,3,3,0.6) 42%, rgba(3,3,3,0.12) 72%, rgba(3,3,3,0) 100%), linear-gradient(to top, #030303 1%, transparent 38%)",
           }}
         />
       </motion.div>
