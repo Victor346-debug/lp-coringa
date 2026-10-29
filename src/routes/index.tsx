@@ -18,7 +18,9 @@ import { getRequestOrigin } from "@/lib/origin.functions";
 export const Route = createFileRoute("/")({
   loader: async () => ({ origin: await getRequestOrigin() }),
   head: ({ loaderData }) => {
-    const shareImage = `${loaderData.origin}${ogCover.url}`;
+    // Only ever emit the share image as a full URL; a relative one is ignored
+    // by WhatsApp/Telegram/X and looks like correct markup.
+    const shareImage = loaderData ? `${loaderData.origin}${ogCover.url}` : undefined;
     return {
       meta: [
         { title: "Coringa dos Prompts — Fature com Inteligência Artificial" },
@@ -34,9 +36,13 @@ export const Route = createFileRoute("/")({
             "Uma organização para quem quer dominar a Inteligência Artificial e transformá-la em dinheiro.",
         },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: shareImage },
+        ...(shareImage
+          ? [
+              { property: "og:image", content: shareImage },
+              { name: "twitter:image", content: shareImage },
+            ]
+          : []),
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: shareImage },
       ],
     };
   },
