@@ -8,3 +8,9 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Build social-share image URLs (`og:image`, `twitter:image`) server-side from the
+  request origin (`src/lib/origin.functions.ts`) rather than hardcoding a host or
+  emitting a relative path: crawlers ignore non-absolute share images, and the host
+  differs between the editor preview, the published domain, and any custom domain
+  added later.

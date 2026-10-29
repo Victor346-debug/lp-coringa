@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import ogCover from "@/assets/og-cover.png.asset.json";
 import { CursorGlow } from "@/components/covil/CursorGlow";
 import { DashboardDemo } from "@/components/covil/DashboardDemo";
 import { Footer, FinalCTA } from "@/components/covil/FinalCTA";
@@ -10,26 +11,41 @@ import { Manifesto } from "@/components/covil/Manifesto";
 import { MatrixRain } from "@/components/covil/MatrixRain";
 import { Nav } from "@/components/covil/Nav";
 import { useSecretModes } from "@/components/covil/useSecretModes";
+import { getRequestOrigin } from "@/lib/origin.functions";
 
+// Crawlers only read absolute image URLs, so the share image is assembled
+// per request from the host that is actually serving the page.
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Coringa dos Prompts — Fature com Inteligência Artificial" },
-      {
-        name: "description",
-        content:
-          "Você não precisa aprender IA. Precisa aprender a faturar com ela. Método, prompts e agentes para construir sua agência digital. Entre no Covil.",
-      },
-      { property: "og:title", content: "Coringa dos Prompts — Entre no Covil" },
-      {
-        property: "og:description",
-        content:
-          "Uma organização para quem quer dominar a Inteligência Artificial e transformá-la em dinheiro.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  loader: async () => ({ origin: await getRequestOrigin() }),
+  head: ({ loaderData }) => {
+    // Only ever emit the share image as a full URL; a relative one is ignored
+    // by WhatsApp/Telegram/X and looks like correct markup.
+    const shareImage = loaderData ? `${loaderData.origin}${ogCover.url}` : undefined;
+    return {
+      meta: [
+        { title: "Coringa dos Prompts — Fature com Inteligência Artificial" },
+        {
+          name: "description",
+          content:
+            "Você não precisa aprender IA. Precisa aprender a faturar com ela. Método, prompts e agentes para construir sua agência digital. Entre no Covil.",
+        },
+        { property: "og:title", content: "Coringa dos Prompts — Entre no Covil" },
+        {
+          property: "og:description",
+          content:
+            "Uma organização para quem quer dominar a Inteligência Artificial e transformá-la em dinheiro.",
+        },
+        { property: "og:type", content: "website" },
+        ...(shareImage
+          ? [
+              { property: "og:image", content: shareImage },
+              { name: "twitter:image", content: shareImage },
+            ]
+          : []),
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    };
+  },
   component: Index,
 });
 
